@@ -1,9 +1,10 @@
-train_data/
-result/
-test/
 frame/
+mask/
+output/
 
 *.mp4
+*.avi
+*.jpg
 
 
 # Byte-compiled / optimized / DLL files

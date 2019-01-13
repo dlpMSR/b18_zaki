@@ -1,22 +1,43 @@
-from .mass import Mass
+import numpy as np
+from components.mass import Mass
 
-class StatsOfOneFrame(object):
+
+class StatusOfOneFrame(object):
     def __init__(self, preprocessedFrame):
         self.frame = preprocessedFrame
-        self.posInDepthDirection
-        self.lengthOfB
-        self.lengthOfC
-        self.surfaceOfD
-        self.isDetected = false
+        self.posInDepthDirection = 0
+        self.targets = self.scanOneFrame()
+        self.lengthOfB = self.targets[0].length
+        self.lengthOfC = self.targets[1].length
+        self.surfaceOfD = self.targets[2].surface
+        self.maxHeightOfD = self.targets[2].maxOfHeight
 
-    def sakicho(img, offset):
-        width = img.shape[1]
+    def getSakicho(self, offset):
+        width = self.frame.shape[1]
         for i in range(offset, width):
-                line = img[:, i]
+                line = self.frame[:, i]
                 test = np.where(line==255)
                 if test[0].size != 0:
                     tip = (i, test[0][0])
                     break
         return tip
-     
+    
+    def scanOneFrame(self):
+        tip = self.getSakicho(0)
+        A = Mass(self.frame, tip)
+        tip = self.getSakicho(A.rearEndCoordinates[0]+1)
+        B = Mass(self.frame, tip)
+        tip = self.getSakicho(B.rearEndCoordinates[0]+1)
+        C = Mass(self.frame, tip)
+        tip = self.getSakicho(C.rearEndCoordinates[0]+1)
+        D = Mass(self.frame, tip)
+        return B, C, D
+
+    def isDetected(self):
+        # !!閾値が固定値!!
+        l = self.targets[2].length
+        if 510 < l  <550:
+            return True
+        else:
+            return False      
 

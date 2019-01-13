@@ -1,10 +1,11 @@
+import numpy as np
 from statistics import mean
 
 
 class Mass(object):
     def __init__(self, img, tip):
         self.x, self.y = self.uneUne(img, tip)
-
+        self.surface = np.array([self.x, self.y])
         self.length = abs(self.x[-1]-self.x[0])
         self.frontEndCoordinates = (self.x[0], self.y[0])
         self.rearEndCoordinates = (self.x[-1], self.y[-1])

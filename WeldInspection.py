@@ -20,8 +20,9 @@ def weldInspection():
             hilightedFrame = frame.generateHighlightedSurfaceImage(frameWithStats)
             out.write(hilightedFrame)
             if frameWithStats.isDetected() == True:
+                # To do : 上手く検出されたときの処理を記述
                 print(frameWithStats.maxHeightOfD)
-                
+                print(frameWithStats.posInDepthDirection)
             cv2.imshow('frame', hilightedFrame)
             frame_num += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -33,32 +34,8 @@ def weldInspection():
     cv2.destroyAllWindows()
 
 
-def generateFrameImage():
-    cap = cv2.VideoCapture('./test04.mp4')
-    num = 0
-    while (cap.isOpened()):
-        ret, frame = cap.read()
-        img_mask, output = imageProcessing(frame)
-        #cv2.imshow('frame', frame)
-        filename_frame = './frame/{}.jpg'.format(num)
-        filename_mask = './mask/{}.jpg'.format(num)
-        filename_output = './output/{}.jpg'.format(num)
-        cv2.imwrite(filename_frame, frame)
-        cv2.imwrite(filename_mask, img_mask)
-        cv2.imwrite(filename_output, output)
-        num += 1
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
-
-
 def main():
     weldInspection()
-    # imageProcessing()
-    # generateFrameImage()
-
-
+    
 if __name__ == '__main__':
     main()

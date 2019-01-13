@@ -5,12 +5,12 @@ from components.mass import Mass
 class StatusOfOneFrame(object):
     def __init__(self, preprocessedFrame):
         self.frame = preprocessedFrame
-        self.posInDepthDirection = 0
         self.targets = self.scanOneFrame()
         self.lengthOfB = self.targets[0].length
         self.lengthOfC = self.targets[1].length
         self.surfaceOfD = self.targets[2].surface
         self.maxHeightOfD = self.targets[2].maxOfHeight
+        self.posInDepthDirection = 0
 
     def getSakicho(self, offset):
         width = self.frame.shape[1]
@@ -18,9 +18,9 @@ class StatusOfOneFrame(object):
                 line = self.frame[:, i]
                 test = np.where(line==255)
                 if test[0].size != 0:
-                    tip = (i, test[0][0])
+                    sakicho = (i, test[0][0])
                     break
-        return tip
+        return sakicho
     
     def scanOneFrame(self):
         tip = self.getSakicho(0)
@@ -32,6 +32,10 @@ class StatusOfOneFrame(object):
         tip = self.getSakicho(C.rearEndCoordinates[0]+1)
         D = Mass(self.frame, tip)
         return B, C, D
+
+    def calcuratePosInDepthDirection(self):
+        # 奥行方向の位置を計算する
+        pass
 
     def isDetected(self):
         # !!閾値が固定値!!

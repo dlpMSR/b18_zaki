@@ -1,8 +1,6 @@
 import numpy as np
 import cv2
 
-from components.mass import Mass
-
 
 class ImageProcessing(object):
     def __init__(self, frame):

@@ -92,28 +92,9 @@ def imageProcessing(frame):
     tip = sakicho(img_filtered, massE.rearEndCoordinates[0]+1)
     massF = Mass(img_filtered, tip)
     # 書きこみ
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    cv2.line(frame, massB.getBottomLine()[0], massB.getBottomLine()[1], (0, 255, 0), 2)
-    cv2.putText(frame, str(massB.length), (massB.centroid[0], massB.centroid[1]-10), font, 1, (0, 255, 0), 2, cv2.LINE_AA)
-    cv2.line(frame, massF.getBottomLine()[0], massF.getBottomLine()[1], (0, 255, 0), 2)
-    cv2.putText(frame, str(massF.length), (massF.centroid[0], massF.centroid[1]-10), font, 1, (0, 255, 0), 2, cv2.LINE_AA)
-    cv2.line(frame, massC.getBottomLine()[0], massC.getBottomLine()[1], (255, 0, 255), 2)
-    cv2.putText(frame, str(massC.length), (massC.centroid[0], massC.centroid[1]-10), font, 1, (255, 0, 255), 2, cv2.LINE_AA)
-    cv2.line(frame, massE.getBottomLine()[0], massE.getBottomLine()[1], (255, 0, 255), 2)
-    cv2.putText(frame, str(massE.length), (massE.centroid[0], massE.centroid[1]-10), font, 1, (255, 0, 255), 2, cv2.LINE_AA)
-    cv2.line(frame, massD.getBottomLine()[0], massD.getBottomLine()[1], (255, 255, 0), 2)
-    cv2.putText(frame, str(massD.length), (massD.centroid[0], massD.centroid[1]+30), font, 1, (255, 255, 0), 2, cv2.LINE_AA)
-    cv2.line(frame, massB.rearEndCoordinates, (massB.rearEndCoordinates[0], massC.frontEndCoordinates[1]), (0, 0, 255), 2)
-    cv2.putText(frame, str(massC.frontEndCoordinates[1]-massB.rearEndCoordinates[1]),
-                (massB.rearEndCoordinates[0]+10, massB.rearEndCoordinates[1]+40),
-                font, 1, (0, 0, 255), 2, cv2.LINE_AA)
-    cv2.line(frame, (massD.maxOfHeight[0]-40, massD.maxOfHeight[1]),
-                    (massD.maxOfHeight[0]+40, massD.maxOfHeight[1]), (255, 255, 0), 2)
-    cv2.line(frame, (massD.maxOfHeight[0]+40, massD.maxOfHeight[1]),
-                    (massD.maxOfHeight[0]+40, massD.getBottomLine()[1][1]), (255, 255, 0), 2)
-    cv2.putText(frame, str(massD.getBottomLine()[0][1]-massD.maxOfHeight[1]), (massD.maxOfHeight[0]+60, massD.maxOfHeight[1]+30), font, 1, (255, 255, 0), 2, cv2.LINE_AA)
+    pos = 0
 
-    return frame
+    return frame, massD.x, massD.y 
 
 def filter(img):
     filter_3x3 = np.array([[ 0,  -1,  0],

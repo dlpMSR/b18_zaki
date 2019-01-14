@@ -19,12 +19,13 @@ class Mass(object):
             pos_x = x[-1]
             pos_y = y[-1]
             scan_line = img[pos_y-20:pos_y+20, pos_x+1]
-            for i in range(len(scan_line)):
-                if scan_line[i] != 0:
-                    x.append(pos_x+1)
-                    y.append(pos_y-20+i)
-                    break
+            scan_line = np.where(scan_line!=0)
+            if scan_line[0].size == 0:
+                break
             else:
+                i_min = np.min(scan_line)
+                x.append(pos_x+1)
+                y.append(pos_y-20+i_min)
                 break
         return x, y
     

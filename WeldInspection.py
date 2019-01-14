@@ -12,7 +12,6 @@ def weldInspection():
     cap = cv2.VideoCapture('./V_20190114_155120_vHDR_On_Trim.mp4')
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (3840, 2160))
-    frame_num = 0
     while(cap.isOpened()):
         t_start = time.time()
         ret, frame = cap.read()
@@ -26,7 +25,6 @@ def weldInspection():
                 print(frameWithStats.maxHeightOfD)
                 print(frameWithStats.posInDepthDirection)
             cv2.imshow('frame', hilightedFrame)
-            frame_num += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         else:

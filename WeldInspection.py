@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import time
 
 from components.mass import Mass
 from components.statusOfOneFrame import StatusOfOneFrame
@@ -8,11 +9,12 @@ from components.imageProcessing import ImageProcessing
 
 
 def weldInspection():
-    cap = cv2.VideoCapture('./test04.mp4')
+    cap = cv2.VideoCapture('./V_20190114_155120_vHDR_On_Trim.mp4')
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (3840, 2160))
     frame_num = 0
     while(cap.isOpened()):
+        t_start = time.time()
         ret, frame = cap.read()
         if ret == True:
             frame = ImageProcessing(frame)
@@ -29,6 +31,9 @@ def weldInspection():
                 break
         else:
             break
+        t_end = time.time()
+        elapsed_time = t_end - t_start
+        print('1loop:{}'.format(elapsed_time))
     cap.release()
     out.release()
     cv2.destroyAllWindows()

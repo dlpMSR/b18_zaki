@@ -26,7 +26,6 @@ class Mass(object):
                 i_min = np.min(scan_line)
                 x.append(pos_x+1)
                 y.append(pos_y-20+i_min)
-                break
         return x, y
     
     def getBottomLine(self):

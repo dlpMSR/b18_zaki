@@ -22,7 +22,7 @@ class ImageProcessing(object):
     def _hsvMask(self, img):
         #閾値が固定
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV_FULL)
-        LOWERRED = np.array([200, 0, 0])
+        LOWERRED = np.array([200, 100, 100])
         UPPERRED = np.array([310, 255, 255])
         maskedImage = cv2.inRange(hsv, LOWERRED, UPPERRED)
         return maskedImage

@@ -40,7 +40,7 @@ class StatusOfOneFrame(object):
     def isDetected(self):
         # !!閾値が固定値!!
         l = self.targets[2].length
-        if 510 < l  <550:
+        if 530 < l  <570:
             return True
         else:
             return False      

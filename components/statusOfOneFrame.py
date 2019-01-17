@@ -10,18 +10,18 @@ class StatusOfOneFrame(object):
         self.lengthOfC = self.targets[1].length
         self.surfaceOfD = self.targets[2].surface
         self.maxHeightOfD = self.targets[2].maxOfHeight
-        self.posInDepthDirection = 0
+        self.posInDepthDirection = self.calculatePosInDepthDirection()
 
     def getSakicho(self, offset):
         width = self.frame.shape[1]
         for i in range(offset, width):
-                line = self.frame[:, i]
-                test = np.where(line==255)
-                if test[0].size != 0:
-                    sakicho = (i, test[0][0])
-                    break
+            line = self.frame[:, i]
+            test = np.where(line == 255)
+            if test[0].size != 0:
+                sakicho = (i, test[0][0])
+                break
         return sakicho
-    
+
     def scanOneFrame(self):
         tip = self.getSakicho(0)
         A = Mass(self.frame, tip)
@@ -33,15 +33,22 @@ class StatusOfOneFrame(object):
         D = Mass(self.frame, tip)
         return B, C, D
 
-    def calcuratePosInDepthDirection(self):
-        # 奥行方向の位置を計算する
-        pass
+    def calculatePosInDepthDirection(self):
+        B = self.lengthOfB
+        C = self.lengthOfC
+        MinOfB = 5
+        MaxOfC = 10
+        LengthOfRuler = 1900
+        minRateOfB = MinOfB / (MinOfB+MaxOfC)
+        gradientRateOfB = (1-minRateOfB) / LengthOfRuler
+        rateOfB = B / (B+C)
+        posInDepthDirection = (rateOfB-minRateOfB) / gradientRateOfB
+        return posInDepthDirection
 
     def isDetected(self):
         # !!閾値が固定値!!
         l = self.targets[2].length
-        if 530 < l  <570:
+        if 530 < l < 570:
             return True
         else:
-            return False      
-
+            return False

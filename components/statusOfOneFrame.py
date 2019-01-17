@@ -38,7 +38,7 @@ class StatusOfOneFrame(object):
         C = self.lengthOfC
         MinOfB = 5
         MaxOfC = 10
-        LengthOfRuler = 1900
+        LengthOfRuler = 190
         minRateOfB = MinOfB / (MinOfB+MaxOfC)
         gradientRateOfB = (1-minRateOfB) / LengthOfRuler
         rateOfB = B / (B+C)

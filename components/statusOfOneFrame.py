@@ -5,11 +5,7 @@ from components.mass import Mass
 class StatusOfOneFrame(object):
     def __init__(self, preprocessedFrame):
         self.frame = preprocessedFrame
-        self.targets = self.scanOneFrame()
-        self.lengthOfB = self.targets[0].length
-        self.lengthOfC = self.targets[1].length
-        self.surfaceOfD = self.targets[2].surface
-        self.maxHeightOfD = self.targets[2].maxOfHeight
+        self.B, self.C, self.D = self.scanOneFrame()
         self.posInDepthDirection = self.calculatePosInDepthDirection()
 
     def getSakicho(self, offset):
@@ -34,8 +30,8 @@ class StatusOfOneFrame(object):
         return B, C, D
 
     def calculatePosInDepthDirection(self):
-        B = self.lengthOfB
-        C = self.lengthOfC
+        B = self.B.length
+        C = self.C.length
         MinOfB = 5
         MaxOfC = 10
         LengthOfRuler = 190
@@ -47,7 +43,7 @@ class StatusOfOneFrame(object):
 
     def isDetected(self):
         # !!閾値が固定値!!
-        l = self.targets[2].length
+        l = self.D.length
         if 530 < l < 570:
             return True
         else:

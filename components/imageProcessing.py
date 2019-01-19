@@ -14,7 +14,7 @@ class ImageProcessing(object):
     def generateHighlightedSurfaceImage(self, frameWithStatus):
         hilightedImage = self.image
         if frameWithStatus.isDetected()==True:
-            surface = frameWithStatus.surfaceOfD
+            surface = frameWithStatus.D.surface
             for i in range(len(surface[0])):
                 hilightedImage[surface[1][i], surface[0][i]] = (0, 255, 0)
         return hilightedImage 

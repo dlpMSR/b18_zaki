@@ -24,8 +24,8 @@ def weldInspection():
             hilightedFrame = frame.generateHighlightedSurfaceImage(frameWithStats)
             out.write(hilightedFrame)
             if frameWithStats.isDetected() == True:
-                z = frameWithStats.surfaceOfD[1]
-                y = frameWithStats.surfaceOfD[0]
+                z = frameWithStats.D.surface[1]
+                y = frameWithStats.D.surface[0]
                 x = np.full(z.size, frameWithStats.posInDepthDirection)
                 ax.plot(x, y, z, color='green', linewidth=1)
             cv2.imshow('frame', hilightedFrame)

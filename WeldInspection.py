@@ -44,17 +44,8 @@ def weldInspection(video_path):
     cap.release()
     out.release()
     cv2.destroyAllWindows()
+    plt.show()
 
-    # ylim = ax.get_ylim()
-    # ax.set_zlim(0, ylim[1]-ylim[0])
-    # plt.show()
-
-def ax_update(ax, frame_status):
-    y, z = frame_status.getDSurfaceForGraph()
-    x = np.full(z.size, frame_status.posInDepthDirection)
-    ax.plot(x, y, z, color='k', linewidth=1, alpha=0.1)
-
-    #グラフを更新
 
 def main():
     weldInspection('./V_20190114_154827_vHDR_On_Trim.mp4')

@@ -24,10 +24,9 @@ def weldInspection():
             hilightedFrame = frame.generateHighlightedSurfaceImage(frameWithStats)
             out.write(hilightedFrame)
             if frameWithStats.isDetected() == True:
-                z = frameWithStats.D.surface[1]
-                y = frameWithStats.D.surface[0]
+                y, z = frameWithStats.getDSurfaceForGraph()
                 x = np.full(z.size, frameWithStats.posInDepthDirection)
-                ax.plot(x, y, z, color='green', linewidth=1)
+                ax.plot(x, y, z, color='k', linewidth=1, alpha=0.1)
             cv2.imshow('frame', hilightedFrame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -37,7 +36,8 @@ def weldInspection():
     out.release()
     cv2.destroyAllWindows()
     
-    ax.set_zlim(800, 1600)
+    ylim = ax.get_ylim()
+    ax.set_zlim(0, ylim[1]-ylim[0])
     plt.show()
 
 

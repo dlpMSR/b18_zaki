@@ -5,10 +5,10 @@ from components.mass import Mass
 class StatusOfOneFrame(object):
     def __init__(self, preprocessedFrame):
         self.frame = preprocessedFrame
-        self.B, self.C, self.D = self.scanOneFrame()
-        self.posInDepthDirection = self.calculatePosInDepthDirection()
+        self.B, self.C, self.D = self._scanOneFrame()
+        self.posInDepthDirection = self._calculatePosInDepthDirection()
 
-    def getSakicho(self, offset):
+    def _getSakicho(self, offset):
         width = self.frame.shape[1]
         for i in range(offset, width):
             line = self.frame[:, i]
@@ -18,18 +18,18 @@ class StatusOfOneFrame(object):
                 break
         return sakicho
 
-    def scanOneFrame(self):
-        tip = self.getSakicho(0)
+    def _scanOneFrame(self):
+        tip = self._getSakicho(0)
         A = Mass(self.frame, tip)
-        tip = self.getSakicho(A.rearEndCoordinates[0]+1)
+        tip = self._getSakicho(A.rearEndCoordinates[0]+1)
         B = Mass(self.frame, tip)
-        tip = self.getSakicho(B.rearEndCoordinates[0]+1)
+        tip = self._getSakicho(B.rearEndCoordinates[0]+1)
         C = Mass(self.frame, tip)
-        tip = self.getSakicho(C.rearEndCoordinates[0]+1)
+        tip = self._getSakicho(C.rearEndCoordinates[0]+1)
         D = Mass(self.frame, tip)
         return B, C, D
 
-    def calculatePosInDepthDirection(self):
+    def _calculatePosInDepthDirection(self):
         B = self.B.length
         C = self.C.length
         MinOfB = 5
@@ -41,7 +41,7 @@ class StatusOfOneFrame(object):
         posInDepthDirection = (rateOfB-minRateOfB) / gradientRateOfB
         return posInDepthDirection
 
-    def  getDSurfaceForGraph(self):
+    def getDSurfaceForGraph(self):
         height = self.frame.shape[0]
         y = height - self.D.surface[1]
         y = y - y.min()

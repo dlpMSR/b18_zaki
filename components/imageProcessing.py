@@ -6,19 +6,6 @@ class ImageProcessing(object):
     def __init__(self, frame):
         self.image = frame
 
-    def preprocessing(self):
-        hsv = self._hsvMask(self.image)
-        noiseRemovedImage = self._removeNoiseByLaveling(hsv)
-        return noiseRemovedImage
-
-    def generateHighlightedSurfaceImage(self, frameWithStatus):
-        hilightedImage = self.image
-        if frameWithStatus.isDetected() == True:
-            surface = frameWithStatus.D.surface
-            for i in range(len(surface[0])):
-                hilightedImage[surface[1][i], surface[0][i]] = (0, 255, 0)
-        return hilightedImage
-
     def _hsvMask(self, img):
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV_FULL)
         LOWERRED = np.array([200, 100, 100])
@@ -41,3 +28,16 @@ class ImageProcessing(object):
                 cv2.rectangle(binarizedImage, (mass[0], mass[1]),
                               (mass[0] + mass[2], mass[1] + mass[3]), 0, -1)
         return binarizedImage
+
+    def preprocessing(self):
+            hsv = self._hsvMask(self.image)
+            noiseRemovedImage = self._removeNoiseByLaveling(hsv)
+            return noiseRemovedImage
+
+    def generateHighlightedSurfaceImage(self, frameWithStatus):
+        hilightedImage = self.image
+        if frameWithStatus.isDetected() == True:
+            surface = frameWithStatus.D.surface
+            for i in range(len(surface[0])):
+                hilightedImage[surface[1][i], surface[0][i]] = (0, 255, 0)
+        return hilightedImage

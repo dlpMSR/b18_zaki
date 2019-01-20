@@ -42,13 +42,17 @@ class ImageProcessing(object):
                 hilightedImage[surface[1][i], surface[0][i]] = (0, 255, 0)
         return hilightedImage
 
-    def generateOutputImage(self, frameWithStatus):
+    def generateOutputImage(self, frameWithStatus, frame_num):
         output_image = self.image
         font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(output_image, 'FRAME:{}'.format(frame_num),
+                    (30, 100), font, 3, (0, 255, 0), 5, cv2.LINE_AA)
         if frameWithStatus.isDetected() == True:
             B = frameWithStatus.B
             C = frameWithStatus.C
             D = frameWithStatus.D
+            cv2.putText(output_image, '5mm:{}px'.format(C.frontEndCoordinates[1]-B.rearEndCoordinates[1]),
+                        (30, 200), font, 3, (255, 0, 255), 5, cv2.LINE_AA)
             cv2.line(output_image, B.bottom_line[0], B.bottom_line[1], (0, 255, 0), 10)
             cv2.putText(output_image, 'B:{}'.format(B.length),
                         (B.centroid[0], B.centroid[1]-30), font, 3, (0, 255, 0), 3, cv2.LINE_AA)

@@ -18,12 +18,13 @@ def weldInspection(video_path):
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (3840, 2160))
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
+    frame_num = 0
     while(cap.isOpened()):
         ret, frame = cap.read()
         if ret == True:
             frame = ImageProcessing(frame)
             frameWithStats = StatusOfOneFrame(frame.preprocessing())
-            output_frame = frame.generateOutputImage(frameWithStats)
+            output_frame = frame.generateOutputImage(frameWithStats, frame_num)
             out.write(output_frame)
             if frameWithStats.isDetected() == True:
                 y, z = frameWithStats.getDSurfaceForGraph()
@@ -36,6 +37,7 @@ def weldInspection(video_path):
             cv2.namedWindow('frame', cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
             cv2.imshow('frame', output_frame)
             pbar.update(1)
+            frame_num += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         else:

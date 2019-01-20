@@ -12,6 +12,7 @@ class Mass(object):
         self.centroid = (int((self.x[0]+self.x[-1])/2),
                          int((self.y[0]+self.y[-1])/2))
         self.maxOfHeight = self.getMaxofHeight()
+        self.bottom_line = self.getBottomLine()
 
     def uneUne(self, img, tip):
         x = [tip[0]]

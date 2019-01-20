@@ -23,18 +23,18 @@ def weldInspection(video_path):
         if ret == True:
             frame = ImageProcessing(frame)
             frameWithStats = StatusOfOneFrame(frame.preprocessing())
-            hilightedFrame = frame.generateHighlightedSurfaceImage(frameWithStats)
-            out.write(hilightedFrame)
+            output_frame = frame.generateOutputImage(frameWithStats)
+            out.write(output_frame)
             if frameWithStats.isDetected() == True:
                 y, z = frameWithStats.getDSurfaceForGraph()
                 x = np.full(z.size, frameWithStats.posInDepthDirection)
-                ax.plot(x, y, z, color='k', linewidth=1, alpha=0.1)
+                ax.plot(x, y, z, color='r', linewidth=1, alpha=0.1)
                 ylim = ax.get_ylim()
                 ax.set_zlim(0, ylim[1]-ylim[0])
                 plt.draw()
                 plt.pause(0.01)
             cv2.namedWindow('frame', cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
-            cv2.imshow('frame', hilightedFrame)
+            cv2.imshow('frame', output_frame)
             pbar.update(1)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

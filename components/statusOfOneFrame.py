@@ -30,14 +30,12 @@ class StatusOfOneFrame(object):
         return B, C, D
 
     def _calculatePosInDepthDirection(self):
-        B = self.B.length
-        C = self.C.length
         MinOfB = 5
         MaxOfC = 10
         LengthOfRuler = 190
         minRateOfB = MinOfB / (MinOfB+MaxOfC)
         gradientRateOfB = (1-minRateOfB) / LengthOfRuler
-        rateOfB = B / (B+C)
+        rateOfB = self.B.length / (self.B.length+self.C.length)
         posInDepthDirection = (rateOfB-minRateOfB) / gradientRateOfB
         return posInDepthDirection
 

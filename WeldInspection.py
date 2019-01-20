@@ -12,10 +12,9 @@ from components.imageProcessing import ImageProcessing
 
 def weldInspection(video_path):
     cap = cv2.VideoCapture(video_path)
-    length = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-    pbar = tqdm(total=int(length))
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (3840, 2160))
+    pbar = tqdm(total=int(cap.get(cv2.CAP_PROP_FRAME_COUNT)))
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     frame_num = 0
@@ -32,8 +31,8 @@ def weldInspection(video_path):
                 ax.plot(x, y, z, color='r', linewidth=1, alpha=0.1)
                 ylim = ax.get_ylim()
                 ax.set_zlim(0, ylim[1]-ylim[0])
-                #plt.draw()
-                #plt.pause(1)
+                plt.draw()
+                plt.pause(0.1)
             cv2.namedWindow('frame', cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
             cv2.imshow('frame', output_frame)
             pbar.update(1)

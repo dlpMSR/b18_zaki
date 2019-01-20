@@ -48,7 +48,6 @@ class StatusOfOneFrame(object):
         return np.vstack((self.D.surface[0], y))
 
     def isDetected(self):
-        # !!閾値が固定値!!
         l = self.D.length
         if 530 < l < 570:
             return True

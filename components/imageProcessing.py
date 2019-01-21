@@ -61,7 +61,7 @@ class ImageProcessing(object):
                         (C.centroid[0], C.centroid[1]-30), font, 3, (0, 255, 0), 3, cv2.LINE_AA)
             cv2.line(output_image, B.coodinates_rear, (B.coodinates_rear[0], C.coodinates_front[1]), (255, 0, 255), 5)
             cv2.line(output_image, D.bottom_line[0], D.bottom_line[1], (255, 255, 0), 10)
-            cv2.rectangle(output_image, (D.maxOfHeight[0]-20, D.maxOfHeight[1]), (D.maxOfHeight[0]+20, D.bottom_line[0][1]), (255, 255, 0), thickness=-1)
+            cv2.rectangle(output_image, (D.max_height[0]-20, D.max_height[1]), (D.max_height[0]+20, D.bottom_line[0][1]), (255, 255, 0), thickness=-1)
             cv2.putText(output_image, 'D_height:{}'.format(frameWithStatus.max_height),
                         (D.centroid[0]+200, D.centroid[1]-30), font, 3, (255, 255, 0), 3, cv2.LINE_AA)
         return output_image

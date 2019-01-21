@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from tqdm import tqdm
@@ -24,20 +23,13 @@ def weldInspection(video_path):
         ret, frame = cap.read()
         if ret == True:
             frame = ImageProcessing(frame)
-            frameWithStats = StatusOfOneFrame(frame.preprocessing())
+            frameWithStats = StatusOfOneFrame(frame.preprocessing(), frame_num)
             output_frame = frame.generateOutputImage(frameWithStats, frame_num)
             out.write(output_frame)
             if frameWithStats.isDetected() == True:
-                y, z = frameWithStats.getDSurface()
-                x = np.full(z.size, frameWithStats.posInDepthDirection)
-                ax2d.cla()
-                ax2d.plot(y, z, color='r')
-                xlim = ax2d.get_xlim()
-                ax2d.set_ylim(0, xlim[1]-xlim[0])
+                frameWithStats.generate2DGraph(ax2d)
+                frameWithStats.update3DGraph(ax3d)
                 fig2d.savefig('./output/frame_{}.png'.format(frame_num))
-                ax3d.plot(x, y, z, color='r', linewidth=1, alpha=0.1)
-                ylim = ax3d.get_ylim()
-                ax3d.set_zlim(0, ylim[1]-ylim[0])
                 # plt.draw()
                 # plt.pause(0.1)
             cv2.namedWindow('frame', cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)

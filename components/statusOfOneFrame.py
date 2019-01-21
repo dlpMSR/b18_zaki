@@ -1,10 +1,14 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
 from components.mass import Mass
 
 
 class StatusOfOneFrame(object):
-    def __init__(self, preprocessedFrame):
+    def __init__(self, preprocessedFrame, frame_num):
         self.frame = preprocessedFrame
+        self.frame_num = frame_num
         self.B, self.C, self.D = self._scanOneFrame()
         self.posInDepthDirection = self._calculatePosInDepthDirection()
 
@@ -51,3 +55,17 @@ class StatusOfOneFrame(object):
         y = height - self.D.surface[1]
         y = y - y.min()
         return np.vstack((self.D.surface[0], y))
+
+    def generate2DGraph(self, ax2d):
+        x, y = self.getDSurface()
+        ax2d.cla()
+        ax2d.plot(x, y, color='r')
+        xlim = ax2d.get_xlim()
+        ax2d.set_ylim(0, xlim[1]-xlim[0])
+
+    def update3DGraph(self, ax3d):
+        y, z = self.getDSurface()
+        x = np.full(z.size, self.posInDepthDirection)
+        ax3d.plot(x, y, z, color='r', linewidth=1, alpha=0.1)
+        ylim = ax3d.get_ylim()
+        ax3d.set_zlim(0, ylim[1]-ylim[0])

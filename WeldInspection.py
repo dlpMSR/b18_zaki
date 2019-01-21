@@ -28,7 +28,7 @@ def weldInspection(video_path):
             output_frame = frame.generateOutputImage(frameWithStats, frame_num)
             out.write(output_frame)
             if frameWithStats.isDetected() == True:
-                y, z = frameWithStats.getDSurfaceForGraph()
+                y, z = frameWithStats.getDSurface()
                 x = np.full(z.size, frameWithStats.posInDepthDirection)
                 ax2d.cla()
                 ax2d.plot(y, z, color='r')

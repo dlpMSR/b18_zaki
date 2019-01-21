@@ -39,7 +39,7 @@ class StatusOfOneFrame(object):
         posInDepthDirection = (rateOfB-minRateOfB) / gradientRateOfB
         return posInDepthDirection
 
-    def getDSurfaceForGraph(self):
+    def getDSurface(self):
         height = self.frame.shape[0]
         y = height - self.D.surface[1]
         y = y - y.min()

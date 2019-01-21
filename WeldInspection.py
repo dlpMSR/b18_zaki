@@ -15,8 +15,10 @@ def weldInspection(video_path):
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (3840, 2160))
     pbar = tqdm(total=int(cap.get(cv2.CAP_PROP_FRAME_COUNT)))
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+    fig2d = plt.figure()
+    fig3d = plt.figure()
+    ax2d = fig2d.add_subplot(111)
+    ax3d = fig3d.add_subplot(111, projection='3d')
     frame_num = 0
     while(cap.isOpened()):
         ret, frame = cap.read()
@@ -28,11 +30,16 @@ def weldInspection(video_path):
             if frameWithStats.isDetected() == True:
                 y, z = frameWithStats.getDSurfaceForGraph()
                 x = np.full(z.size, frameWithStats.posInDepthDirection)
-                ax.plot(x, y, z, color='r', linewidth=1, alpha=0.1)
-                ylim = ax.get_ylim()
-                ax.set_zlim(0, ylim[1]-ylim[0])
-                plt.draw()
-                plt.pause(0.1)
+                ax2d.cla()
+                ax2d.plot(y, z, color='r')
+                xlim = ax2d.get_xlim()
+                ax2d.set_ylim(0, xlim[1]-xlim[0])
+                fig2d.savefig('./output/frame_{}.png'.format(frame_num))
+                ax3d.plot(x, y, z, color='r', linewidth=1, alpha=0.1)
+                ylim = ax3d.get_ylim()
+                ax3d.set_zlim(0, ylim[1]-ylim[0])
+                # plt.draw()
+                # plt.pause(0.1)
             cv2.namedWindow('frame', cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
             cv2.imshow('frame', output_frame)
             pbar.update(1)
@@ -49,7 +56,7 @@ def weldInspection(video_path):
 
 
 def main():
-    weldInspection('./V_20190114_154827_vHDR_On_Trim.mp4')
+    weldInspection('./V_20190114_155120_vHDR_On_Trim.mp4')
 
 
 if __name__ == '__main__':

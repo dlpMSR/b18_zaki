@@ -39,15 +39,15 @@ class StatusOfOneFrame(object):
         posInDepthDirection = (rateOfB-minRateOfB) / gradientRateOfB
         return posInDepthDirection
 
-    def getDSurface(self):
-        height = self.frame.shape[0]
-        y = height - self.D.surface[1]
-        y = y - y.min()
-        return np.vstack((self.D.surface[0], y))
-
     def isDetected(self):
         l = self.D.length
         if 530 < l < 570:
             return True
         else:
             return False
+
+    def getDSurface(self):
+        height = self.frame.shape[0]
+        y = height - self.D.surface[1]
+        y = y - y.min()
+        return np.vstack((self.D.surface[0], y))

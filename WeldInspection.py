@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import csv
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from tqdm import tqdm
@@ -13,6 +14,10 @@ def weldInspection(video_path):
     cap = cv2.VideoCapture(video_path)
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (3840, 2160))
+    f = open('./output.csv', 'w')
+    writer = csv.writer(f, lineterminator='\n')
+    writer.writerow(['frame_num', 'pix_5mm', 'B_length', 'C_length', 'max_height'])
+    result_list = []
     pbar = tqdm(total=int(cap.get(cv2.CAP_PROP_FRAME_COUNT)))
     fig2d = plt.figure()
     fig3d = plt.figure()
@@ -26,6 +31,7 @@ def weldInspection(video_path):
             frameWithStats = StatusOfOneFrame(frame.preprocessing(), frame_num)
             output_frame = frame.generateOutputImage(frameWithStats, frame_num)
             out.write(output_frame)
+            result_list.append(frameWithStats.getFrameStatus())
             if frameWithStats.isDetected() == True:
                 frameWithStats.generate2DGraph(ax2d)
                 frameWithStats.update3DGraph(ax3d)
@@ -40,6 +46,9 @@ def weldInspection(video_path):
                 break
         else:
             break
+    for item in result_list:
+        writer.writerow(item)
+    f.close()
     pbar.close()
     cap.release()
     out.release()

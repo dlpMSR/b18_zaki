@@ -10,8 +10,8 @@ class StatusOfOneFrame(object):
         self.frame = preprocessedFrame
         self.frame_num = frame_num
         self.B, self.C, self.D = self._scanOneFrame()
-        self.posInDepthDirection = self._calculatePosInDepthDirection()
-        self.pixels_criterion = self.C.frontEndCoordinates[1]-self.B.rearEndCoordinates[1]
+        self.pos_depth = self._calculatePosInDepthDirection()
+        self.pixels_criterion = self.C.coodinates_front[1] - self.B.coodinates_rear[1]
         self.max_height = self.D.bottom_line[0][1]-self.D.maxOfHeight[1]
 
     def _getSakicho(self, offset):
@@ -27,23 +27,23 @@ class StatusOfOneFrame(object):
     def _scanOneFrame(self):
         tip = self._getSakicho(0)
         A = Mass(self.frame, tip)
-        tip = self._getSakicho(A.rearEndCoordinates[0]+1)
+        tip = self._getSakicho(A.coodinates_rear[0]+1)
         B = Mass(self.frame, tip)
-        tip = self._getSakicho(B.rearEndCoordinates[0]+1)
+        tip = self._getSakicho(B.coodinates_rear[0]+1)
         C = Mass(self.frame, tip)
-        tip = self._getSakicho(C.rearEndCoordinates[0]+1)
+        tip = self._getSakicho(C.coodinates_rear[0]+1)
         D = Mass(self.frame, tip)
         return B, C, D
 
     def _calculatePosInDepthDirection(self):
-        MinOfB = 5
-        MaxOfC = 10
-        LengthOfRuler = 190
-        minRateOfB = MinOfB / (MinOfB+MaxOfC)
-        gradientRateOfB = (1-minRateOfB) / LengthOfRuler
+        MIN_B = 5
+        MAX_C = 10
+        LENGTH_RULER = 190
+        min_rate_B = MIN_B / (MIN_B + MAX_C)
+        gradient_rate_B = (1-min_rate_B) / LENGTH_RULER
         rateOfB = self.B.length / (self.B.length+self.C.length)
-        posInDepthDirection = (rateOfB-minRateOfB) / gradientRateOfB
-        return posInDepthDirection
+        pos_depth = (rateOfB-min_rate_B) / gradient_rate_B
+        return pos_depth
 
     def isDetected(self):
         l = self.D.length
@@ -54,7 +54,8 @@ class StatusOfOneFrame(object):
 
     def getFrameStatus(self):
         if self.isDetected() == True:
-            status = [self.frame_num, self.pixels_criterion, self.B.length, self.C.length, self.max_height]
+            status = [self.frame_num, self.pixels_criterion,
+                      self.B.length, self.C.length, self.max_height]
         else:
             status = [self.frame_num]
         return status
@@ -74,7 +75,7 @@ class StatusOfOneFrame(object):
 
     def update3DGraph(self, ax3d):
         y, z = self.getDSurface()
-        x = np.full(z.size, self.posInDepthDirection)
+        x = np.full(z.size, self.pos_depth)
         ax3d.plot(x, y, z, color='r', linewidth=1, alpha=0.1)
         ylim = ax3d.get_ylim()
         ax3d.set_zlim(0, ylim[1]-ylim[0])

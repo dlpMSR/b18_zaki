@@ -28,13 +28,13 @@ def weldInspection(video_path):
         ret, frame = cap.read()
         if ret == True:
             frame = ImageProcessing(frame)
-            frameWithStats = StatusOfOneFrame(frame.preprocessing(), frame_num)
-            output_frame = frame.generateOutputImage(frameWithStats, frame_num)
+            frame_status = StatusOfOneFrame(frame.preprocessing(), frame_num)
+            output_frame = frame.generateOutputImage(frame_status, frame_num)
             out.write(output_frame)
-            result_list.append(frameWithStats.getFrameStatus())
-            if frameWithStats.isDetected() == True:
-                frameWithStats.generate2DGraph(ax2d)
-                frameWithStats.update3DGraph(ax3d)
+            result_list.append(frame_status.getFrameStatus())
+            if frame_status.isDetected() == True:
+                frame_status.generate2DGraph(ax2d)
+                frame_status.update3DGraph(ax3d)
                 fig2d.savefig('./output/frame_{}.png'.format(frame_num))
                 # plt.draw()
                 # plt.pause(0.1)

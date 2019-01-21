@@ -8,8 +8,8 @@ class Mass(object):
         self.x, self.y = self.uneUne(img, tip)
         self.surface = np.array([self.x, self.y])
         self.length = abs(self.x[-1]-self.x[0])
-        self.frontEndCoordinates = (self.x[0], self.y[0])
-        self.rearEndCoordinates = (self.x[-1], self.y[-1])
+        self.coodinates_front = (self.x[0], self.y[0])
+        self.coodinates_rear = (self.x[-1], self.y[-1])
         self.centroid = (int((self.x[0]+self.x[-1])/2),
                          int((self.y[0]+self.y[-1])/2))
         self.maxOfHeight = self.getMaxofHeight()

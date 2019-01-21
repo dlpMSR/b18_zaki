@@ -5,6 +5,7 @@ output/
 *.mp4
 *.avi
 *.jpg
+*.csv
 
 
 # Byte-compiled / optimized / DLL files

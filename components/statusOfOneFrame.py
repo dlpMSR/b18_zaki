@@ -11,6 +11,8 @@ class StatusOfOneFrame(object):
         self.frame_num = frame_num
         self.B, self.C, self.D = self._scanOneFrame()
         self.posInDepthDirection = self._calculatePosInDepthDirection()
+        self.pixels_criterion = self.C.frontEndCoordinates[1]-self.B.rearEndCoordinates[1]
+        self.max_height = self.D.bottom_line[0][1]-self.D.maxOfHeight[1]
 
     def _getSakicho(self, offset):
         width = self.frame.shape[1]
@@ -49,6 +51,13 @@ class StatusOfOneFrame(object):
             return True
         else:
             return False
+
+    def getFrameStatus(self):
+        if self.isDetected() == True:
+            status = [self.frame_num, self.pixels_criterion, self.B.length, self.C.length, self.max_height]
+        else:
+            status = [self.frame_num]
+        return status
 
     def getDSurface(self):
         height = self.frame.shape[0]

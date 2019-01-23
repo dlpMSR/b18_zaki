@@ -62,9 +62,11 @@ class StatusOfOneFrame(object):
 
     def getDSurface(self):
         height = self.frame.shape[0]
+        x = self.D.surface[0]
         y = height - self.D.surface[1]
+        x = x - x.min()
         y = y - y.min()
-        return np.vstack((self.D.surface[0], y))
+        return np.vstack((x, y))
 
     def generate2DGraph(self, ax2d):
         x, y = self.getDSurface()

@@ -72,6 +72,7 @@ class StatusOfOneFrame(object):
         x, y = self.getDSurface()
         ax2d.cla()
         ax2d.plot(x, y, color='r')
+        ax2d.set_title('frame:{}'.format(self.frame_num))
         xlim = ax2d.get_xlim()
         ax2d.set_ylim(0, xlim[1]-xlim[0])
 

@@ -51,7 +51,8 @@ class ImageProcessing(object):
             B = frameWithStatus.B
             C = frameWithStatus.C
             D = frameWithStatus.D
-            cv2.putText(output_image, '5mm:{}px'.format(frameWithStatus.pixels_criterion),
+            cv2.putText(output_image,
+                        '5mm:{px}px(1px={mm})'.format(px=frameWithStatus.pixels_criterion, mm=round(frameWithStatus.mmppx, 4)),
                         (30, 200), font, 3, (255, 0, 255), 5, cv2.LINE_AA)
             cv2.line(output_image, B.bottom_line[0], B.bottom_line[1], (0, 255, 0), 10)
             cv2.putText(output_image, 'B:{}'.format(B.length),
@@ -62,6 +63,6 @@ class ImageProcessing(object):
             cv2.line(output_image, B.coodinates_rear, (B.coodinates_rear[0], C.coodinates_front[1]), (255, 0, 255), 5)
             cv2.line(output_image, D.bottom_line[0], D.bottom_line[1], (255, 255, 0), 10)
             cv2.rectangle(output_image, (D.max_height[0]-20, D.max_height[1]), (D.max_height[0]+20, D.bottom_line[0][1]), (255, 255, 0), thickness=-1)
-            cv2.putText(output_image, 'D_height:{}'.format(frameWithStatus.max_height),
+            cv2.putText(output_image, 'D_height:{px}({mm}mm)'.format(px=frameWithStatus.max_height, mm=round(frameWithStatus.length_measured, 2)),
                         (D.centroid[0]+200, D.centroid[1]-30), font, 3, (255, 255, 0), 3, cv2.LINE_AA)
         return output_image

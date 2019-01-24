@@ -13,6 +13,8 @@ class StatusOfOneFrame(object):
         self.pos_depth = self._calculatePosInDepthDirection()
         self.pixels_criterion = self.C.coodinates_front[1] - self.B.coodinates_rear[1]
         self.max_height = self.D.bottom_line[0][1]-self.D.max_height[1]
+        self.mmppx = 5 / self.pixels_criterion
+        self.length_measured = self.max_height * self.mmppx
 
     def _getSakicho(self, offset):
         width = self.frame.shape[1]

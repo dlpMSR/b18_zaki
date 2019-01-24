@@ -16,7 +16,7 @@ def weldInspection(video_path):
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (3840, 2160))
     f = open('./output.csv', 'w')
     writer = csv.writer(f, lineterminator='\n')
-    writer.writerow(['frame_num', 'pix_5mm', 'B_length', 'C_length', 'max_height'])
+    writer.writerow(['frame_num', 'pix_5mm', 'mm/px', 'B_length', 'C_length', 'max_height', 'max_height(mm)'])
     result_list = []
     pbar = tqdm(total=int(cap.get(cv2.CAP_PROP_FRAME_COUNT)))
     fig2d = plt.figure()

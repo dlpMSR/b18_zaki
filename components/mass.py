@@ -33,11 +33,14 @@ class Mass(object):
 
     def getBottomLine(self):
         leftend_x = self.x[0]
-        rightend_y = self.x[-1]
-        sample_left_y = self.y[0:20:2]
-        sample_right_y = self.y[-1:-21:-2]
-        bottom_y = mean(sample_left_y+sample_right_y)
-        return (leftend_x, bottom_y), (rightend_y, bottom_y)
+        rightend_x = self.x[-1]
+        if self.length > 20:
+            sample_left_y = self.y[20:40:2]
+            sample_right_y = self.y[-21:-41:-2]
+            bottom_y = mean(sample_left_y+sample_right_y)
+        else:
+            bottom_y = self.y[0]
+        return (leftend_x, bottom_y), (rightend_x, bottom_y)
 
     def getMaxofHeight(self):
         i = self.y.index(min(self.y))

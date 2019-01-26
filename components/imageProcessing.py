@@ -34,7 +34,7 @@ class ImageProcessing(object):
         img_noiseremoved = self._removeNoiseByLaveling(hsv)
         return img_noiseremoved
 
-    def getSurfaceHighlightedImage(self, stats_frame):
+    def generateSurfaceHighlightedImage(self, stats_frame):
         img_highlighted = self.img_origin
         if stats_frame.isDetected():
             surface = stats_frame.D.surface

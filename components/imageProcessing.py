@@ -42,10 +42,10 @@ class ImageProcessing(object):
                 img_highlighted[surface[1][i], surface[0][i]] = (0, 255, 0)
         return img_highlighted
 
-    def generateOutputImage(self, stats_frame, frame_num):
+    def generateOutputImage(self, stats_frame, num_frame):
         img_output = self.img_origin
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(img_output, 'FRAME:{}'.format(frame_num),
+        cv2.putText(img_output, 'FRAME:{}'.format(num_frame),
                     (30, 100), font, 3, (0, 255, 0), 5, cv2.LINE_AA)
         if stats_frame.isDetected():
             B = stats_frame.B

@@ -6,9 +6,9 @@ from components.mass import Mass
 
 
 class StatusOfOneFrame(object):
-    def __init__(self, preprocessedFrame, frame_num):
+    def __init__(self, preprocessedFrame, num_frame):
         self.frame = preprocessedFrame
-        self.frame_num = frame_num
+        self.num_frame = num_frame
         self.B, self.C, self.D = self._scanOneFrame()
         self.pos_depth = self._calculatePosInDepthDirection()
         self.pixels_criterion = self.C.coodinates_front[1] - self.B.coodinates_rear[1]
@@ -56,10 +56,10 @@ class StatusOfOneFrame(object):
 
     def getFrameStatus(self):
         if self.isDetected() == True:
-            status = [self.frame_num, self.pixels_criterion, self.mmppx,
+            status = [self.num_frame, self.pixels_criterion, self.mmppx,
                       self.B.length, self.C.length, self.max_height, self.length_measured]
         else:
-            status = [self.frame_num]
+            status = [self.num_frame]
         return status
 
     def getDSurface(self):
@@ -74,7 +74,7 @@ class StatusOfOneFrame(object):
         x, y = self.getDSurface()
         ax2d.cla()
         ax2d.plot(x, y, color='r')
-        ax2d.set_title('frame:{}'.format(self.frame_num))
+        ax2d.set_title('frame:{}'.format(self.num_frame))
         xlim = ax2d.get_xlim()
         ax2d.set_ylim(0, xlim[1]-xlim[0])
 

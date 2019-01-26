@@ -28,7 +28,7 @@ def weldInspection(video_path):
         ret, frame = cap.read()
         if ret == True:
             frame = ImageProcessing(frame)
-            frame_status = StatusOfOneFrame(frame.preprocessing(), frame_num)
+            frame_status = StatusOfOneFrame(frame.getPreprocessedImage(), frame_num)
             output_frame = frame.generateOutputImage(frame_status, frame_num)
             out.write(output_frame)
             result_list.append(frame_status.getFrameStatus())

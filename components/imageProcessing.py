@@ -3,14 +3,14 @@ import cv2
 
 
 class ImageProcessing(object):
-    def __init__(self, frame):
-        self.image = frame
+    def __init__(self, img):
+        self.image = img
 
     def _hsvMask(self, img):
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV_FULL)
-        LOWERRED = np.array([200, 100, 100])
-        UPPERRED = np.array([310, 255, 255])
-        maskedImage = cv2.inRange(hsv, LOWERRED, UPPERRED)
+        LOWER_RED = np.array([200, 100, 100])
+        UPPER_RED = np.array([310, 255, 255])
+        maskedImage = cv2.inRange(hsv, LOWER_RED, UPPER_RED)
         return maskedImage
 
     def _filter(self, img):

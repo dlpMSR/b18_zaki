@@ -28,6 +28,14 @@ def weldInspection(video_path):
         ret, frame = cap.read()
         if ret == True:
             frame = ImageProcessing(frame)
+
+            frame_origin = frame.img_origin
+            frame_colormask = frame._hsvMask(frame_origin)
+            frame_noiseremoved = frame.getPreprocessedImage()
+            cv2.imwrite('./output/origin/frame_{}.png'.format(num_frame), frame_origin)
+            cv2.imwrite('./output/colormask/frame_{}.png'.format(num_frame), frame_colormask)
+            cv2.imwrite('./output/noiseremoved/frame_{}.png'.format(num_frame), frame_noiseremoved)
+
             frame_status = StatusOfOneFrame(frame.getPreprocessedImage(), num_frame)
             output_frame = frame.generateOutputImage(frame_status, num_frame)
             out.write(output_frame)

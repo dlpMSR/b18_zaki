@@ -38,6 +38,9 @@ def weldInspection(video_path):
 
             frame_status = StatusOfOneFrame(frame.getPreprocessedImage(), num_frame)
             output_frame = frame.generateOutputImage(frame_status, num_frame)
+
+            cv2.imwrite('./output/outputf/frame_{}.png'.format(num_frame), output_frame)
+
             out.write(output_frame)
             result_list.append(frame_status.getFrameStatus())
             if frame_status.isDetected() == True:
